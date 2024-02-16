@@ -1,0 +1,666 @@
+/*
+ * Platform edition!
+ * Custom styles to override OneTrust's styles. Selectors
+ * based on what OneTrust provides. All styles have `!important`
+ * applied to them to override the high specificity of OneTrust's styles.
+ * ----------------------------------------------------------- */
+
+#onetrust-consent-sdk {
+    --cookie-consent-color-neutral100: #fffdf9;
+    --cookie-consent-color-neutral200: #f7f5f2;
+    --cookie-consent-color-neutral300: #e8e7e4;
+    --cookie-consent-color-neutral600: #95928e;
+    --cookie-consent-color-neutral800: #2d2e2e;
+    --cookie-consent-color-blue: #3d4592;
+    --cookie-consent-color-acid-wash: #f0f1fa;
+    --cookie-consent-color-night: #2c3266;
+    --cookie-consent-color-success: #0f884e;
+    --cookie-consent-button-all: unset;
+    --cookie-consent-button-box-sizing: border-box;
+    --cookie-consent-button-cursor: pointer;
+    --cookie-consent-button-display: flex;
+    --cookie-consent-button-align-items: center;
+    --cookie-consent-button-justify-content: center;
+    --cookie-consent-button-text-align: center;
+    --cookie-consent-button-padding: 10px 15px;
+    --cookie-consent-button-font-size: 14px;
+    --cookie-consent-button-font-weight: 600;
+    --cookie-consent-button-height: 40px;
+    --cookie-consent-button-border-radius: 3px;
+    --cookie-consent-button-transition: all 200ms ease-in-out;
+}
+
+/* Global styles
+------------------------------------------------ */
+
+#onetrust-consent-sdk {
+    font-family: 'Inter', sans-serif;
+    color: var(--cookie-consent-color-neutral800);
+}
+
+#onetrust-consent-sdk * {
+    font-family: 'Inter', sans-serif;
+    transition-duration: 300ms;
+    animation-duration: 300ms;
+}
+
+#onetrust-consent-sdk #onetrust-pc-sdk,
+#onetrust-consent-sdk #search-container,
+#onetrust-consent-sdk #onetrust-pc-sdk ot-grp-hdr1 .checkbox,
+#onetrust-consent-sdk #onetrust-pc-sdk #pc-title:after,
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-sel-blk,
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-fltr-cnt,
+#onetrust-consent-sdk #onetrust-pc-sdk #ot-anchor {
+    background-color: var(--cookie-consent-color-neutral100);
+}
+
+/* Banner styles
+-------------------------------------------------- */
+
+/* The banner itself */
+
+#onetrust-banner-sdk {
+    width: 100%;
+    max-width: 100%;
+    bottom: 0;
+    border-radius: 0;
+}
+
+@media (min-width: 450px) {
+    #onetrust-banner-sdk {
+        max-width: 380px;
+        bottom: 20px;
+        left: 20px;
+        border-radius: var(--cookie-consent-button-border-radius);
+    }
+}
+
+/* Button group within banner */
+
+#cookie-preferences .save-preference-btn-container,
+#onetrust-pc-sdk #vendors-list #vendor-list-save-btn {
+    position: sticky;
+    bottom: 0;
+    width: calc(100% - 40px);
+    max-width: 100%;
+    max-height: 160px;
+    padding: 10px 20px;
+    display: inline-flex;
+    justify-content: end;
+    gap: 10px;
+    z-index: 2;
+    border-top: 1px solid var(--cookie-consent-color-neutral200);
+    background-color: var(--cookie-consent-color-neutral100);
+}
+
+#onetrust-button-group-parent {
+    padding-bottom: 10px;
+}
+
+/* Accept all cookies button */
+
+#onetrust-accept-btn-handler {
+    all: var(--cookie-consent-button-all);
+    box-sizing: var(--cookie-consent-button-box-sizing);
+    cursor: var(--cookie-consent-button-cursor);
+    display: var(--cookie-consent-button-display);
+    align-items: var(--cookie-consent-button-align-items);
+    justify-content: var(--cookie-consent-button-justify-content);
+    text-align: var(--cookie-consent-button-text-align);
+    padding: var(--cookie-consent-button-padding);
+    font-size: var(--cookie-consent-button-font-size);
+    font-weight: var(--cookie-consent-button-font-weight);
+    height: var(--cookie-consent-button-height);
+    border-radius: var(--cookie-consent-button-border-radius);
+    transition: var(--cookie-consent-button-transition);
+    background-color: var(--cookie-consent-color-blue);
+    color: var(--cookie-consent-color-neutral100);
+    width: 100%;
+}
+
+#onetrust-accept-btn-handler:hover,
+#onetrust-accept-btn-handler:focus {
+    background-color: var(--cookie-consent-color-night);
+}
+
+/* Configure cookies button */
+
+#onetrust-pc-btn-handler {
+    all: var(--cookie-consent-button-all);
+    box-sizing: var(--cookie-consent-button-box-sizing);
+    cursor: var(--cookie-consent-button-cursor);
+    display: var(--cookie-consent-button-display);
+    align-items: var(--cookie-consent-button-align-items);
+    justify-content: var(--cookie-consent-button-justify-content);
+    text-align: var(--cookie-consent-button-text-align);
+    padding: var(--cookie-consent-button-padding);
+    font-size: var(--cookie-consent-button-font-size);
+    font-weight: var(--cookie-consent-button-font-weight);
+    height: var(--cookie-consent-button-height);
+    border-radius: var(--cookie-consent-button-border-radius);
+    transition: var(--cookie-consent-button-transition);
+    color: var(--cookie-consent-color-blue);
+    width: 100%;
+}
+
+#onetrust-pc-btn-handler:hover,
+#onetrust-pc-btn-handler:focus {
+    color: var(--cookie-consent-color-night);
+}
+
+/* Modal styles
+-------------------------------------------------- */
+
+/* Preference center modal */
+
+/*
+In order to override OneTrust's high specificity styles, all styles
+in this stylesheet have `!important` appended to them by `index.js`.
+`!important` overrides inline styles (the `style` attribute).
+To prevent these styles from overriding the inline styles that
+OneTrust applies to `#onetrust-pc-sdk` when it's shown/hidden,
+qualify the selector with `not([style])`. This means that when
+`#onetrust-pc-sdk` has a `style` attribute with `display` in it,
+these styles will not apply because the selector will not match.
+Without this `not([style])` qualifier, the modal will be invisible
+but still interactive, which prevents users from accessing page
+content that renders beneath it.
+  In addition to the `not([style])` selector, `not(.ot-hide)` also
+needs to be part of the selector to prevent specificity conflicts
+with another one of OneTrust's selectors. Without `not(.ot-hide)`,
+the styles below can override OneTrust's `#onetrust-pc-sdk.ot-hide`
+styles, causing the modal to render when it shouldn't.
+*/
+
+#onetrust-pc-sdk:not(.ot-hide):not([style*=display]) {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    border-radius: 0;
+}
+
+@media (min-width: 600px) {
+    #onetrust-pc-sdk:not(.ot-hide):not([style*=display]) {
+        border-radius: var(--cookie-consent-button-border-radius);
+        bottom: auto;
+        max-height: 80vh;
+    }
+}
+
+#onetrust-pc-sdk.otPcCenter {
+    top: 47px;
+}
+
+#onetrust-pc-sdk #ot-content.ot-main-content[aria-hidden="true"] #pc-title,
+#onetrust-pc-sdk #ot-content.ot-main-content[aria-hidden="true"] #pc-policy-text,
+#onetrust-pc-sdk #ot-content.ot-main-content[aria-hidden="true"] #accept-recommended-container.ot-sdk-row,
+#onetrust-pc-sdk #ot-content.ot-main-content[aria-hidden="true"] #cookie-preferences.ot-sdk-row.category-group {
+    display: none;
+}
+
+/* Zapier logo in header */
+
+#onetrust-pc-sdk .pc-logo {
+    width: 78px;
+    height: 40px;
+    margin-bottom: 0;
+    justify-content: flex-start;
+    background-image: url('https://cdn.zapier.com/storage/files/9782ae6c3f0d1531323276ba8279606f.svg');
+}
+
+#onetrust-pc-sdk .pc-logo img {
+    display: none;
+}
+
+.pc-logo-container {
+    position: fixed;
+    top: 47px;
+    width: 560px;
+    height: 60px;
+    padding: 10px 20px 5px;
+    z-index: 3;
+    border-bottom: 1px solid var(--cookie-consent-color-neutral200);
+    background-color: var(--cookie-consent-color-neutral100);
+    box-sizing: border-box;
+}
+
+/* Modal close button */
+
+#onetrust-pc-sdk #close-pc-btn-handler.ot-close-icon {
+    display: block;
+    position: sticky;
+    top: 8px;
+    right: 0;
+    left: 585px;
+    min-height: 44px;
+    margin: 0;
+    z-index: 4;
+    opacity: 0.5;
+    transition: all 200ms ease-in-out;
+}
+
+/* Hiding the vendor list close button as the one above does the same thing, and is easier to style */
+
+#onetrust-pc-sdk #vendors-list #vendors-list-header #vendor-close-pc-btn-handler {
+    display: none;
+}
+
+#onetrust-pc-sdk #close-pc-btn-handler.ot-close-icon:hover,
+#onetrust-pc-sdk #close-pc-btn-handler.ot-close-icon:focus {
+    outline: none;
+    opacity: 1;
+}
+
+/* Modal content */
+
+#onetrust-pc-sdk #ot-content {
+    all: unset;
+    box-sizing: border-box;
+    color: var(--cookie-consent-color-neutral800);
+    height: auto;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+}
+
+/* Modal title and description */
+
+#pc-title,
+#pc-policy-text {
+    width: calc(100% - 40px);
+    margin: 30px 20px 10px 20px;
+    line-height: 1.6;
+    color: var(--cookie-consent-color-neutral800);
+}
+
+#pc-policy-text br {
+    display: none;
+}
+
+.privacy-notice-link {
+    margin: 0;
+    color: var(--cookie-consent-color-blue);
+    text-decoration: none;
+}
+
+.privacy-notice-link:hover,
+.privacy-notice-link:focus {
+    color: var(--cookie-consent-color-night);
+    text-decoration: underline;
+}
+
+.category-host-list-handler {
+    color: var(--cookie-consent-color-blue);
+}
+
+/* Cookies details link */
+
+.category-host-list-handler:hover,
+.category-host-list-handler:focus {
+    color: var(--cookie-consent-color-night);
+    text-decoration: underline;
+}
+
+/* Title of cookie category customization section */
+
+#manage-cookies-text {
+    width: 95%;
+    margin: 10px 10px 10px 20px;
+    padding: 0;
+    line-height: 1.6;
+    color: var(--cookie-consent-color-neutral800);
+}
+
+/* Expandable cookie sections */
+
+#cookie-preferences .ot-accordion-layout.category-item:first-of-type,
+#cookie-preferences .ot-accordion-layout.category-item {
+    max-width: calc(100% - 30px);
+    padding: 0 10px 5px 20px;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+}
+
+/* Expandable cookie section header */
+
+#onetrust-pc-sdk .ot-accordion-layout .accordion-header {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    outline: none;
+    padding: 10px;
+    font-size: 14px;
+    height: 40px;
+    border-radius: 3px;
+}
+
+#onetrust-pc-sdk input[type="checkbox"]:focus+.accordion-header,
+#onetrust-pc-sdk input[type="checkbox"]:hover+.accordion-header {
+    background-color: var(--cookie-consent-color-neutral300);
+    outline: none;
+}
+
+#onetrust-pc-sdk .accordion-header .category-header {
+    font-weight: 600;
+    flex: 1;
+    margin: 0 10px 0 0;
+}
+
+#onetrust-pc-sdk .ot-arrow-container {
+    order: 1;
+    margin: 0 0 0 10px;
+}
+
+#onetrust-pc-sdk #cookie-preferences .ot-always-active {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--cookie-consent-color-neutral600);
+}
+
+/* Expandable cookie section toggle switch */
+
+#cookie-preferences .ot-accordion-layout.category-item .accordion-header .ot-switch.ot-toggle .ot-switch-label {
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.ot-accordion-layout.category-item .accordion-header .ot-switch.ot-toggle {
+    background-color: transparent;
+}
+
+.ot-accordion-layout.category-item .accordion-header .ot-toggle input {
+    all: unset;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.ot-accordion-layout.category-item .accordion-header .ot-switch-label {
+    all: unset;
+    box-sizing: border-box;
+    display: block;
+    width: 40px;
+    height: 20px;
+    border-radius: 20px;
+    padding: 3px;
+    background-color: var(--cookie-consent-color-neutral600);
+}
+
+.ot-accordion-layout.category-item .accordion-header input:focus+.ot-switch-label {
+    box-shadow: 0 0 0 2px var(--cookie-consent-color-blue);
+}
+
+.ot-accordion-layout.category-item .accordion-header input:checked+.ot-switch-label {
+    background-color: var(--cookie-consent-color-success);
+}
+
+.ot-accordion-layout.category-item .ot-switch-label .ot-switch-nob {
+    all: unset;
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    background-color: var(--cookie-consent-color-neutral100);
+}
+
+.ot-accordion-layout.category-item .accordion-header input:checked+.ot-switch-label .ot-switch-nob {
+    transform: translateX(20px);
+}
+
+.ot-accordion-layout.category-item .accordion-header .ot-switch.ot-toggle .ot-switch-label .ot-switch-inner::before {
+    content: none;
+}
+
+.ot-accordion-layout.category-item .accordion-header.ot-always-active-group .ot-switch.ot-toggle.ot-hide-tgl {
+    display: none;
+    visibility: hidden;
+}
+
+/* Expandable cookie section content */
+
+.ot-accordion-pc-container.accordion-text {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.ot-accordion-group-pc-container.ot-category-desc {
+    color: var(--cookie-consent-color-neutral800);
+    float: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 10px 10px;
+    width: 100%;
+}
+
+.cookie-subgroups-container {
+    border: none;
+    padding: 10px 0 10px 20px;
+}
+
+.cookie-subgroup {
+    margin: 0;
+}
+
+.cookie-subgroups-container li {
+    margin: 0;
+}
+
+.ot-toggle-group.cookie-subgroup-toggle {
+    display: none;
+}
+
+#onetrust-pc-sdk .ot-accordion-layout .category-host-list-container {
+    padding: 10px;
+}
+
+#onetrust-pc-sdk .ot-accordion-layout .category-host-list-container:last-child {
+    padding-bottom: 0;
+}
+
+/* Cookies list */
+
+#onetrust-pc-sdk #vendors-list .hosts-list.ot-hide {
+    display: none;
+}
+
+#onetrust-pc-sdk .hosts-list #vendors-list-header {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 30px 10px 10px 20px;
+}
+
+#onetrust-pc-sdk .hosts-list .back-btn-handler {
+    padding: 5px;
+}
+
+#onetrust-pc-sdk #vendors-list #vendors-list-header .ot-link-btn.back-btn-handler:focus,
+#onetrust-pc-sdk #vendors-list #vendors-list-header .ot-link-btn.back-btn-handler:hover {
+    outline: none;
+    opacity: 0.6;
+}
+
+#onetrust-pc-sdk .hosts-list .back-btn-handler .pc-back-button-text {
+    display: none;
+}
+
+#onetrust-pc-sdk .hosts-list #vendors-list-title {
+    margin: 5px 10px 2px;
+}
+
+#hosts-list-container {
+    all: unset;
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 10px;
+}
+
+#onetrust-pc-sdk #search-container {
+    display: none;
+    visibility: hidden;
+}
+
+#onetrust-pc-sdk #vendor-list-content.host-list-content {
+    all: unset;
+    display: block;
+    padding: 0 10px 0 20px;
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-option-group {
+    all: unset;
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-item {
+    all: unset;
+    display: block;
+    position: relative;
+    border: none;
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-item:first-of-type {
+    border-top: none;
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-item .accordion-header {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 3px;
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-item .accordion-text {
+    all: unset;
+    display: none;
+    position: relative;
+    z-index: 2;
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-item input:checked~.accordion-text {
+    display: block;
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    float: none;
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cookie-consent-color-neutral800);
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-title a {
+    color: var(--cookie-consent-color-blue);
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-notice {
+    margin-top: 0;
+}
+
+#onetrust-pc-sdk #hosts-list-container .host-notice .host-view-cookies {
+    display: none;
+}
+
+#onetrust-consent-sdk #onetrust-pc-sdk #hosts-list-container .vendor-host {
+    all: unset;
+    display: grid;
+    grid-template-columns: minmax(80px, auto) 1fr;
+    gap: 5px 20px;
+    padding: 10px;
+    font-size: 12px;
+    border: 1px solid var(--cookie-consent-color-neutral200);
+    border-radius: 10px;
+}
+
+.vendor-host a {
+    color: var(--cookie-consent-color-blue);
+}
+
+.vendor-host>* {
+    display: contents;
+}
+
+.vendor-host>*>* {
+    all: unset;
+    display: block;
+    font-size: 12px;
+}
+
+.vendor-host>*>*:first-child {
+    color: var(--cookie-consent-color-neutral600);
+}
+
+/* Confirm cookie choices modal footer button */
+
+.save-preference-btn-handler {
+    all: var(--cookie-consent-button-all);
+    box-sizing: var(--cookie-consent-button-box-sizing);
+    cursor: var(--cookie-consent-button-cursor);
+    display: var(--cookie-consent-button-display);
+    align-items: var(--cookie-consent-button-align-items);
+    justify-content: var(--cookie-consent-button-justify-content);
+    text-align: var(--cookie-consent-button-text-align);
+    padding: var(--cookie-consent-button-padding);
+    font-size: var(--cookie-consent-button-font-size);
+    font-weight: var(--cookie-consent-button-font-weight);
+    height: var(--cookie-consent-button-height);
+    border-radius: var(--cookie-consent-button-border-radius);
+    transition: var(--cookie-consent-button-transition);
+    background-color: var(--cookie-consent-color-blue);
+    color: var(--cookie-consent-color-neutral100);
+}
+
+.save-preference-btn-handler:hover,
+.save-preference-btn-handler:focus {
+    background-color: var(--cookie-consent-color-night);
+}
+
+/* Allow and reject all cookies buttons */
+
+#accept-recommended-btn-handler,
+.ot-pc-refuse-all-handler {
+    all: var(--cookie-consent-button-all);
+    box-sizing: var(--cookie-consent-button-box-sizing);
+    cursor: var(--cookie-consent-button-cursor);
+    display: var(--cookie-consent-button-display);
+    align-items: var(--cookie-consent-button-align-items);
+    justify-content: var(--cookie-consent-button-justify-content);
+    text-align: var(--cookie-consent-button-text-align);
+    padding: var(--cookie-consent-button-padding);
+    font-size: var(--cookie-consent-button-font-size);
+    font-weight: var(--cookie-consent-button-font-weight);
+    height: var(--cookie-consent-button-height);
+    border-radius: var(--cookie-consent-button-border-radius);
+    transition: var(--cookie-consent-button-transition);
+    background-color: var(--cookie-consent-color-neutral100);
+    border: 1px solid var(--cookie-consent-color-blue);
+    margin: 0;
+    color: var(--cookie-consent-color-blue);
+}
+
+#accept-recommended-btn-handler:hover,
+#accept-recommended-btn-handler:focus,
+.ot-pc-refuse-all-handler:hover,
+.ot-pc-refuse-all-handler:focus {
+    color: var(--cookie-consent-color-blue);
+    background-color: var(--cookie-consent-color-acid-wash);
+}
+
+/* OneTrust footer logo */
+
+.ot-pc-footer-logo {
+    display: none;
+}
